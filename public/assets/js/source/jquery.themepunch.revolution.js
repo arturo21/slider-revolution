@@ -1,6 +1,6 @@
 /**************************************************************************
  * jquery.themepunch.revolution.js - jQuery Plugin for Revolution Slider
- * @version: 5.3.1.4 (30.11.2016)
+ * @version: 5.3.1.5 (08.12.2016)
  * @requires jQuery v1.7 or later (tested on 1.9)
  * @author ThemePunch
 **************************************************************************/
@@ -12,7 +12,7 @@
 					"revolution.extensions.actions.min.js":"2.0.4",
 					"revolution.extensions.carousel.min.js":"1.2.1",
 					"revolution.extensions.kenburn.min.js":"1.2.0",
-					"revolution.extensions.layeranimation.min.js":"3.4.4",
+					"revolution.extensions.layeranimation.min.js":"3.5.0",
 					"revolution.extensions.navigation.min.js":"1.3.2",
 					"revolution.extensions.parallax.min.js":"2.2.0",
 					"revolution.extensions.slideanims.min.js":"1.6",
@@ -1577,7 +1577,8 @@ var initSlider = function (container,opt) {
 				if (_ndata.wrapper_class!==undefined) preclas = preclas+" "+_ndata.wrapper_class;
 				if (_ndata.wrapper_id!==undefined) preid ='id="'+_ndata.wrapper_id+'"';
 
-				_nc.wrap('<div class="tp-parallax-wrap '+preclas+'" style="'+ec+'position:'+_pos+';'+dmode+';visibility:hidden"><div class="tp-loop-wrap" style="'+ec+'position:'+_pos+';'+dmode+';"><div class="tp-mask-wrap" style="'+ec+'position:'+_pos+';'+dmode+';" ></div></div></div>');
+
+				_nc.wrap('<div '+preid+' class="tp-parallax-wrap '+preclas+'" style="'+ec+'position:'+_pos+';'+dmode+';visibility:hidden"><div class="tp-loop-wrap" style="'+ec+'position:'+_pos+';'+dmode+';"><div class="tp-mask-wrap" style="'+ec+'position:'+_pos+';'+dmode+';" ></div></div></div>');
 				
 				
 				// ONLY ADD LAYERS TO FADEOUT DYNAMIC LIST WHC

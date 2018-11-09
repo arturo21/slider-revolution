@@ -1437,9 +1437,11 @@ class RevSliderOutput {
 		$grayscalefilter = RevSliderFunctions::getVal($layer['deformation'], 'grayscalefilter', 0);
 
 		//$frame_hover
-		$hover_blurfilter = RevSliderFunctions::getVal($layer['deformation-hover'], 'blurfilter', 0);
-		$hover_grayscalefilter = RevSliderFunctions::getVal($layer['deformation-hover'], 'grayscalefilter', 0);
-
+		if(isset($layer['deformation-hover'])){
+			$hover_blurfilter = RevSliderFunctions::getVal($layer['deformation-hover'], 'blurfilter', 0);
+			$hover_grayscalefilter = RevSliderFunctions::getVal($layer['deformation-hover'], 'grayscalefilter', 0);
+		}
+		
 		//$frame_start['from']
 		$anim_blurfilter_start = RevSliderFunctions::getVal($layer, 'blurfilter_start', 0);
 		$anim_grayscalefilter_start = RevSliderFunctions::getVal($layer, 'grayscalefilter_start', 0);
@@ -3109,6 +3111,9 @@ class RevSliderOutput {
 		
 		//add deformation and hover deformation to the layers
 		$def_val = (array) RevSliderFunctions::getVal($layer, 'deformation', array());
+		//get hover stuff, because of css_cursor
+		$def_val_h = (array) RevSliderFunctions::getVal($layer, 'deformation-hover', array());
+		
 		$def = array();
 		$st_idle = array();
 		$def['o'] = array(RevSliderFunctions::getVal($def_val, 'opacity', '0'), '0');
@@ -3218,8 +3223,7 @@ class RevSliderOutput {
 			}
 		}
 		
-		//get hover stuff, because of css_cursor
-		$def_val_h = (array) RevSliderFunctions::getVal($layer, 'deformation-hover', array());
+		
 		
 		//add the css_cursor to the idle styles
 		$css_cursor = RevSliderFunctions::getVal($def_val_h, 'css_cursor', 'auto');
@@ -3243,37 +3247,24 @@ class RevSliderOutput {
 			$def_string .= 'fg:'.$grayscalefilter.';';
 		}
 		
-		foreach($st_idle as $key => $value){
-			if($type == 'image' || $type == 'video'){ //do not print unneeded styles
-				if(in_array($key, $this->ignore_styles)) continue;
-			}
-			if(trim($value[0]) == '' || $value[0] == $value[1]) continue;
-			if(str_replace('px', '', $value[0]) == str_replace('px', '', $value[1])) continue;
-			$style_string .= $key.':'.$value[0].';';
-		}
-		
-		$frame_start['to'] = str_replace('"', "'", $def_string);
-		
-		$idle_style = $style_string;
-		
 		//check if hover is active for the layer
 		$is_hover_active = RevSliderFunctions::getVal($layer, 'hover', '0');
 		
-		$def = array();
-		
+		$def_h = array();
 		$st_h_string = '';
+		$st_hover = array();
 		
 		if($is_hover_active){
 			
-			$def['o'] = array(RevSliderFunctions::getVal($def_val_h, 'opacity', '0'), '0');
-			$def['sX'] = array(RevSliderFunctions::getVal($def_val_h, 'scalex', '1'), '1');
-			$def['sY'] = array(RevSliderFunctions::getVal($def_val_h, 'scaley', '1'), '1');
-			$def['skX'] = array(RevSliderFunctions::getVal($def_val_h, 'skewx', '0'), '0');
-			$def['skY'] = array(RevSliderFunctions::getVal($def_val_h, 'skewy', '0'), '0');
-			$def['rX'] = array(RevSliderFunctions::getVal($def_val_h, 'xrotate', '0'), '0');
-			$def['rY'] = array(RevSliderFunctions::getVal($def_val_h, 'yrotate', '0'), '0');
-			$def['rZ'] = array(RevSliderFunctions::getVal($def_val_h, '2d_rotation', '0'), 'inherit');
-			$def['z'] = array(RevSliderFunctions::getVal($def_val_h, 'z', '0'), '0');
+			$def_h['o'] = array(RevSliderFunctions::getVal($def_val_h, 'opacity', '0'), '0');
+			$def_h['sX'] = array(RevSliderFunctions::getVal($def_val_h, 'scalex', '1'), '1');
+			$def_h['sY'] = array(RevSliderFunctions::getVal($def_val_h, 'scaley', '1'), '1');
+			$def_h['skX'] = array(RevSliderFunctions::getVal($def_val_h, 'skewx', '0'), '0');
+			$def_h['skY'] = array(RevSliderFunctions::getVal($def_val_h, 'skewy', '0'), '0');
+			$def_h['rX'] = array(RevSliderFunctions::getVal($def_val_h, 'xrotate', '0'), '0');
+			$def_h['rY'] = array(RevSliderFunctions::getVal($def_val_h, 'yrotate', '0'), '0');
+			$def_h['rZ'] = array(RevSliderFunctions::getVal($def_val_h, '2d_rotation', '0'), 'inherit');
+			$def_h['z'] = array(RevSliderFunctions::getVal($def_val_h, 'z', '0'), '0');
 			
 			$frame_hover['frame'] = 'hover';
 			$frame_hover['speed'] = RevSliderFunctions::getVal($def_val_h, 'speed', '300');
@@ -3285,7 +3276,6 @@ class RevSliderOutput {
 			}*/
 			
 			//style
-			$st_hover = array();
 			$font_color = RevSliderFunctions::getVal($def_val_h, 'color', '#000');
 			if($font_color !== 'transparent'){
 				$font_trans = RevSliderFunctions::getVal($def_val_h, 'color-transparency', 1);
@@ -3382,17 +3372,85 @@ class RevSliderOutput {
 				}
 			}
 			
-			$def_string = '';
-			foreach($def as $key => $value){
+			$def_string_h = '';
+			foreach($def_h as $key => $value){
 				if(trim($value[0]) == '' || $value[0] === $value[1]) continue;
-				$def_string .= $key.':'.$value[0].';';
+				$def_string_h .= $key.':'.$value[0].';';
 			}
 			if($hover_blurfilter != 0 && $hover_blurfilter != '0px' || $blur_write_all){
-				$def_string .= 'fb:'.$hover_blurfilter.';';
+				$def_string_h .= 'fb:'.$hover_blurfilter.';';
 			}
 			if($hover_grayscalefilter != 0 && $hover_grayscalefilter != '0%' || $grayscale_write_all){
-				$def_string .= 'fg:'.$hover_grayscalefilter.';';
+				$def_string_h .= 'fg:'.$hover_grayscalefilter.';';
 			}
+			
+			
+		}
+		
+		//check border related settings to remove if not needed
+		$ibw = true;
+		$ibs = true;
+		if(isset($st_idle['border-width'])){
+			if($st_idle['border-width'][0] == '0' || $st_idle['border-width'][0] == '0px' || $st_idle['border-width'][0] == '0px 0px 0px 0px'){
+				$ibw = false;
+			}
+		}else{
+			$ibw = false;
+		}
+		if(isset($st_idle['border-style'])){
+			if($st_idle['border-style'][0] == 'none'){
+				$ibs = false;
+			}
+		}else{
+			$ibs = false;
+		}
+		$ibw_h = true;
+		$ibs_h = true;
+		if($is_hover_active){
+			if(isset($st_hover['bw'])){
+				if($st_hover['bw'][0] == '0' || $st_hover['bw'][0] == '0px' || $st_hover['bw'][0] == '0px 0px 0px 0px'){
+					$ibw_h = false;
+				}
+			}else{
+				$ibw_h = false;
+			}
+			if(isset($st_hover['bs'])){
+				if($st_hover['bs'][0] == 'none'){
+					$ibs_h = false;
+				}
+			}else{
+				$ibs_h = false;
+			}
+		}
+		
+		if(
+			$is_hover_active && ($ibw_h == false || $ibs_h == false) && ($ibw == false || $ibs == false) || 
+			$is_hover_active == false && ($ibw == false || $ibs == false)
+		){
+			//remove all of border settings
+			if(isset($st_idle['border-width'])) unset($st_idle['border-width']);
+			if(isset($st_idle['border-color'])) unset($st_idle['border-color']);
+			if(isset($st_idle['border-style'])) unset($st_idle['border-style']);
+			if(isset($st_hover['bw'])) unset($st_hover['bw']);
+			if(isset($st_hover['bc'])) unset($st_hover['bc']);
+			if(isset($st_hover['bs'])) unset($st_hover['bs']);
+			
+		}
+		
+		foreach($st_idle as $key => $value){
+			if($type == 'image' || $type == 'video'){ //do not print unneeded styles
+				if(in_array($key, $this->ignore_styles)) continue;
+			}
+			if(trim($value[0]) == '' || $value[0] == $value[1]) continue;
+			if(str_replace('px', '', $value[0]) == str_replace('px', '', $value[1])) continue;
+			$style_string .= $key.':'.$value[0].';';
+		}
+		
+		$frame_start['to'] = str_replace('"', "'", $def_string);
+		
+		$idle_style = $style_string;
+		
+		if($is_hover_active){
 			
 			foreach($st_hover as $key => $value){
 				if(trim($value[0]) == '' || $value[0] === $value[1]) continue;
@@ -3400,16 +3458,14 @@ class RevSliderOutput {
 			}
 			
 			
-			$frame_hover['to'] = $def_string;
+			$frame_hover['to'] = $def_string_h;
 			if($st_h_string !== ''){
 				$frame_hover['style'] = $st_h_string;
 			}
 		}
 		
-		
 		//set corners
 		$htmlCorners = "";
-		
 		
 		if($type == "text" || $type == "button"){
 			$cornerdef = RevSliderFunctions::getVal($layer, "deformation");
@@ -5339,7 +5395,8 @@ class RevSliderOutput {
 						
 					}
 				}else{
-					$htmlBeforeSlider .= RevSliderOperations::getCleanFontImport($googleFont);
+					//$htmlBeforeSlider .= RevSliderOperations::getCleanFontImport($googleFont);
+					RevSliderOperations::setCleanFontImport($googleFont);
 				}
 			}
 			
@@ -5348,6 +5405,7 @@ class RevSliderOutput {
 				foreach($gfonts as $gf){
 					$gf = str_replace(array('"', '+'), array('', ' '), $gf);
 					$htmlBeforeSlider .= RevSliderOperations::getCleanFontImport($gf);
+					RevSliderOperations::setCleanFontImport($gf);
 				}
 			}*/
 			
@@ -5371,9 +5429,11 @@ class RevSliderOutput {
 						}
 					}
 				}
-				$htmlBeforeSlider .= RevSliderOperations::getCleanFontImport($gfk, '', '', $variants, $subsets);
+				//$htmlBeforeSlider .= RevSliderOperations::getCleanFontImport($gfk, '', '', $variants, $subsets);
+				RevSliderOperations::setCleanFontImport($gfk, '', '', $variants, $subsets);
 			}
 			
+			$htmlBeforeSlider .= RevSliderOperations::printCleanFontImport();
 			if($markup_export === true){
 				$htmlBeforeSlider .= '<!-- /FONT -->';
 			}

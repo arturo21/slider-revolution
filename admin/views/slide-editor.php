@@ -483,7 +483,7 @@ if($slide->isStaticSlide() || $slider->isSlidesFromPosts()){ //insert sliderid f
 
 
 		<!-- FIXED TOOLBAR ON THE RIGHT SIDE -->
-		<div class="rs-mini-toolbar">
+		<ul class="rs-mini-toolbar" id="revslider_mini_toolbar">
 			<?php
 			if(!$slide->isStaticSlide()){
 				$savebtnid="button_save_slide-tb";
@@ -496,27 +496,30 @@ if($slide->isStaticSlide() || $slider->isSlidesFromPosts()){ //insert sliderid f
 				$prevbtn = "button_preview_slider-tb";
 			}
 			?>
-			<div class="rs-toolbar-savebtn rs-mini-toolbar-button">
+			<!--<div class="rs-toolbar-stickybtn rs-mini-toolbar-button notyetsticky" id="stickystylesbutton_wrap">
+				<a class='button-primary revbluedark' href='javascript:void(0)' id="stickystylesbutton" ><i class="fa-icon-paperclip" style="display: inline-block;vertical-align: middle;width: 18px;height: 20px;font-size:18px"></i><span class="mini-toolbar-text"><?php _e("Toggle Sticky",'revslider'); ?></span></a>
+			</div>-->
+			<li class="rs-toolbar-savebtn rs-mini-toolbar-button">
 				<a class='button-primary revgreen' href='javascript:void(0)' id="<?php echo $savebtnid; ?>" ><i class="rs-icon-save-light" style="display: inline-block;vertical-align: middle;width: 18px;height: 20px;background-repeat: no-repeat;"></i><span class="mini-toolbar-text"><?php _e("Save Slide",'revslider'); ?></span></a>
-			</div>
+			</li>
 			
-			<div class="rs-toolbar-cssbtn rs-mini-toolbar-button">
+			<li class="rs-toolbar-cssbtn rs-mini-toolbar-button">
 				<a class='button-primary revpurple' href='javascript:void(0)' id='button_edit_css_global'><i class="">&lt;/&gt;</i><span class="mini-toolbar-text"><?php _e("Slider CSS/JS",'revslider'); ?></span></a>
-			</div>
+			</li>
 
 
-			<div class="rs-toolbar-slides rs-mini-toolbar-button">
+			<li class="rs-toolbar-slides rs-mini-toolbar-button">
 				<?php
 				$slider_url = ($sliderTemplate == 'true') ? RevSliderAdmin::VIEW_SLIDER_TEMPLATE : RevSliderAdmin::VIEW_SLIDER;
 				?>
 				<a class="button-primary revblue" href="<?php echo self::getViewUrl($slider_url,"id=$sliderID"); ?>" id="link_edit_slides_t"><i class="revicon-cog"></i><span class="mini-toolbar-text"><?php _e("Slider Settings",'revslider'); ?></span> </a>
 				
-			</div>
-			<div class="rs-toolbar-preview rs-mini-toolbar-button">
+			</li>
+			<li class="rs-toolbar-preview rs-mini-toolbar-button">
 				<a class="button-primary revgray" href="javascript:void(0)"  id="<?php echo $prevbtn; ?>" ><i class="revicon-search-1"></i><span class="mini-toolbar-text"><?php _e("Preview",'revslider'); ?></span></a>
-			</div>
+			</li>
 			
-		</div>
+		</ul>
 	</div>
 
 	<script>
@@ -533,14 +536,23 @@ if($slide->isStaticSlide() || $slider->isSlidesFromPosts()){ //insert sliderid f
 			});
 			var mtb = jQuery('.rs-mini-toolbar'),
 				mtbo = mtb.offset().top;
-			jQuery(document).on("scroll",function() {
-				
-				if (mtbo-jQuery(window).scrollTop()<35) 
+			
+			function checkStickyToolBar() {
+				if (mtbo-jQuery(window).scrollTop()<35) {
 					mtb.addClass("sticky");
-				else
+					jQuery('#wp-admin-bar-my-account').css({paddingRight:"180px"});
+				}
+				else {
 					mtb.removeClass("sticky");
+					jQuery('#wp-admin-bar-my-account').css({paddingRight:"0px"});
+				}
 				
-			})
+			}
+			checkStickyToolBar();
+			jQuery(document).on("scroll",checkStickyToolBar);
+
+			
+			
 		});
 	</script>
 	

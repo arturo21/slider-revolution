@@ -1015,6 +1015,11 @@ class RevSliderTemplate {
 				<a class="preview_template_slider" href="<?php echo esc_attr($template['preview']); ?>" target="_blank"><i class="eg-icon-search"></i></a>
 				<?php } ?>
 				<span data-sliderid="<?php echo $slider_id; ?>" data-slideid="<?php echo $slide_id; ?>" class="show_more_template_slider <?php if (isset($template["user_template"])) echo 'add_user_template_slide_item'; ?>"><i class="eg-icon-plus"></i></span>
+				<?php if (isset($template["user_template"])){
+					?>
+					<span data-sliderid="<?php echo $slider_id; ?>" data-slideid="<?php echo $slide_id; ?>" class="show_more_template_slider delete_user_template_slide_item"><i class="eg-icon-trash"></i></span>
+					<?php
+				} ?>
 				<span class="template_group_opener"><i class="fa-icon-folder"></i></span>
 			</div>
 			<?php if($slider_id == false){ ?>

@@ -418,6 +418,7 @@ class RevSliderAdmin extends RevSliderBaseAdmin{
 			'override_animation' => __('Animation exists, override existing animation?', 'revslider'),
 			'this_feature_only_if_activated' => __('This feature is only available if you activate Slider Revolution for this installation', 'revslider'),
 			'unsaved_data_will_be_lost_proceed' => __('Unsaved data will be lost, proceed?', 'revslider'),
+			'delete_user_slide' => __('This will delete this Slide Template, proceed?', 'revslider'),
 			'is_loading' => __('is Loading...', 'revslider'),
 			'google_fonts_loaded' => __('Google Fonts Loaded', 'revslider'),
 			'delete_layer' => __('Delete Layer?', 'revslider'),
@@ -1729,6 +1730,18 @@ class RevSliderAdmin extends RevSliderBaseAdmin{
 				case "reset_slide_settings":
 					$slider->resetSlideSettings($data);
 					self::ajaxResponseSuccess(__("Settings in all Slides changed",'revslider'));
+				break;
+				case "delete_template_slide":
+				
+					$slideID = (isset($data['slide_id'])) ? $data['slide_id'] : -1;
+					
+					if($slideID === -1) RevSliderFunctions::throwError(__('Missing Slide ID!', 'revslider'));
+					
+					$slide->initByID($slideID);
+					$slide->deleteSlide();
+					
+					$responseText = __("Slide deleted",'revslider');
+					self::ajaxResponseSuccess($responseText);
 				break;
 				case "activate_purchase_code":
 					$result = false;

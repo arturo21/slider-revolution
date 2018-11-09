@@ -1324,7 +1324,8 @@ class RevSliderOperations extends RevSliderElementsBase{
 							
 						}
 					}else{
-						$gfonts .= RevSliderOperations::getCleanFontImport($googleFont);
+						RevSliderOperations::setCleanFontImport($googleFont);
+						//$gfonts .= RevSliderOperations::getCleanFontImport($googleFont);
 					}
 					//add all google fonts of layers
 					$gfsubsets = $slider->getParam("subsets",array());
@@ -1346,10 +1347,12 @@ class RevSliderOperations extends RevSliderElementsBase{
 								}
 							}
 						}
-						$gfonts .= RevSliderOperations::getCleanFontImport($gfk, '', '', $variants, $subsets);
+						RevSliderOperations::setCleanFontImport($gfk, '', '', $variants, $subsets);
+						//$gfonts .= RevSliderOperations::getCleanFontImport($gfk, '', '', $variants, $subsets);
 					}
 					
-					echo $gfonts;
+					echo RevSliderOperations::printCleanFontImport();
+					//echo $gfonts;
 					?>
 
 					<script type='text/javascript' src='<?php echo $setBase; ?>code.jquery.com/jquery-latest.min.js'></script>
@@ -2058,7 +2061,160 @@ ob_end_clean();
 		return($arrOutput);
 	}
 
-
+	
+	public static function setCleanFontImport($font, $class = '', $url = '', $variants = array(), $subsets = array()){
+		global $revslider_fonts;
+		
+		$ret = '';
+		
+		if(!isset($revslider_fonts)) $revslider_fonts = array(); //if this is called without revslider.php beeing loaded
+		
+		$do_print = false;
+		$tcf = '';
+		if(!empty($variants) || !empty($subsets)){
+			if(!isset($revslider_fonts[$font])) $revslider_fonts[$font] = array();
+			if(!isset($revslider_fonts[$font]['variants'])) $revslider_fonts[$font]['variants'] = array();
+			if(!isset($revslider_fonts[$font]['subsets'])) $revslider_fonts[$font]['subsets'] = array();
+			
+			if(!empty($variants)){
+				foreach($variants as $k => $v){
+					if(!in_array($v, $revslider_fonts[$font]['variants'])){
+						$revslider_fonts[$font]['variants'][] = $v;
+					}else{ //already included somewhere, so do not call it anymore
+						unset($variants[$k]);
+					}
+				}
+			}
+			if(!empty($subsets)){
+				foreach($subsets as $k => $v){
+					if(!in_array($v, $revslider_fonts[$font]['subsets'])){
+						$revslider_fonts[$font]['subsets'][] = $v;
+					}else{ //already included somewhere, so do not call it anymore
+						unset($subsets[$k]);
+					}
+				}
+			}
+			/*
+			if(!empty($variants)){
+				$mgfirst = true;
+				foreach($variants as $mgvk => $mgvv){
+					if(!$mgfirst) $tcf .= ',';
+					$tcf .= $mgvv;
+					$mgfirst = false;
+				}
+			}
+			
+			if(!empty($subsets)){
+				
+				$mgfirst = true;
+				foreach($subsets as $ssk => $ssv){
+					if($mgfirst) $tcf .= '&subset=';
+					if(!$mgfirst) $tcf .= ',';
+					$tcf .= $ssv;
+					$mgfirst = false;
+				}
+			}
+			
+			if($tcf !== ''){
+				$tcf = ':'.$tcf;
+				$do_print = true;
+			}*/
+		}else{
+			/*if(in_array($font, $revslider_fonts)){
+				$ret = '';
+				$do_print = false;
+			}else{
+				$do_print = true;
+			}*/
+		}
+		
+		
+		/*if($do_print){
+			$setBase = (is_ssl()) ? "https://" : "http://";
+			
+			if($class !== '') $class = ' class="'.$class.'"';
+			
+			if(!isset($revslider_fonts[$font])){
+				$revslider_fonts[$font] = array();
+			}
+			if(strpos($font, "href=") === false){ //fallback for old versions
+				$url = RevSliderFront::modify_punch_url($setBase . 'fonts.googleapis.com/css?family=');
+				$ret = '<link href="'.$url.urlencode($font.$tcf).'"'.$class.' rel="stylesheet" property="stylesheet" type="text/css" media="all">'; //id="rev-google-font"
+			}else{
+				$font = str_replace(array('http://', 'https://'), array($setBase, $setBase), $font);
+				$ret = html_entity_decode(stripslashes($font));
+			}
+		}
+		
+		
+		return apply_filters('revslider_getCleanFontImport', $ret, $font, $class, $url, $variants, $subsets);*/
+	}
+	
+	
+	/**
+	 * print html font import
+	 *
+	 */
+	public static function printCleanFontImport(){
+		global $revslider_fonts;
+		
+		$do_print = false;
+		$font_first = true;
+		$ret = '';
+		$tcf = '';
+		$tcf2 = '';
+		
+		if(!empty($revslider_fonts)){
+			foreach($revslider_fonts as $f_n => $f_s){
+				if($f_n !== ''){
+					if(isset($f_s['variants']) && !empty($f_s['variants']) || isset($f_s['subsets']) && !empty($f_s['subsets'])){
+						if(strpos($f_n, "href=") === false){
+							if($font_first == false) $tcf .= '|';
+							$tcf .= urlencode($f_n).':';
+							
+							if(isset($f_s['variants']) && !empty($f_s['variants'])){
+								$mgfirst = true;
+								foreach($f_s['variants'] as $mgvk => $mgvv){
+									if(!$mgfirst) $tcf .= urlencode(',');
+									$tcf .= urlencode($mgvv);
+									$mgfirst = false;
+								}
+							}
+							
+							if(isset($f_s['subsets']) && !empty($f_s['subsets'])){
+								$mgfirst = true;
+								foreach($f_s['subsets'] as $ssk => $ssv){
+									if($mgfirst) $tcf .= urlencode('&subset=');
+									if(!$mgfirst) $tcf .= urlencode(',');
+									$tcf .= urlencode($ssv);
+									$mgfirst = false;
+								}
+							}
+							
+						}else{
+							$f_n = str_replace(array('http://', 'https://'), array($setBase, $setBase), $f_n);
+							$tcf2 .= html_entity_decode(stripslashes($f_n));
+						}
+					}
+					$font_first = false;
+				}
+			}
+		}
+	
+		$setBase = (is_ssl()) ? "https://" : "http://";
+		
+		$url = RevSliderFront::modify_punch_url($setBase . 'fonts.googleapis.com/css?family=');
+		if($tcf !== ''){
+			$ret .= '<link href="'.$url.$tcf.'" rel="stylesheet" property="stylesheet" type="text/css" media="all">'; //id="rev-google-font"
+		}
+		if($tcf2 !== ''){
+			$ret .= html_entity_decode(stripslashes($tcf2));
+		}
+		
+		return apply_filters('revslider_printCleanFontImport', $ret);
+	}
+	
+	
 	/**
 	 *
 	 * get html font import

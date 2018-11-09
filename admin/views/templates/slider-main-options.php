@@ -1451,9 +1451,9 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 										<input placeholder="<?php _e("Min. Height (Optional)", 'revslider');?>" type="text" class="text-sidebar" style="padding:11px 45px 11px 15px; line-height:26px" id="min_height" name="min_height" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, "min_height", "");?>">
 										<i class="input-edit-icon"></i>
 										<span class="description"><?php _e("The minimum height of the Slider in FullWidth or Auto mode.", 'revslider');?></span>
-										<span class="rs-show-on-auto">
+										<span class="rs-show-on-auto" style="display:inline-block; position:relative;">
 											<input placeholder="<?php _e("Max. Width (Optional)", 'revslider');?>" type="text" class="text-sidebar" style="padding:11px 45px 11px 15px; margin-top: 20px; line-height:26px" id="max_width" name="max_width" value="<?php echo RevSliderFunctions::getVal($arrFieldsParams, "max_width", "");?>">
-											<i class="input-edit-icon" style="top: 99px;"></i>
+											<i class="input-edit-icon" style="top: 23px; right:0px"></i>
 											<span class="description"><?php _e("The maximum width of the Slider in Auto mode.", 'revslider');?></span>
 										</span>
 									</span>
@@ -1484,9 +1484,13 @@ if(!isset($linksEditSlides)) $linksEditSlides = '';
 									}
 									
 									var s_fs = jQuery('#slider_type_1').attr("checked")==="checked";
+
+									console.log(s_fs)
 									if (s_fs) {
+										console.log("Show All This")
 										jQuery('.rs-show-on-auto').show();
 									}else{
+										console.log("Hide All This")
 										jQuery('.rs-show-on-auto').hide();
 									}
 								});

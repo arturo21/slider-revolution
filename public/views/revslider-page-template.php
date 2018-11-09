@@ -1,6 +1,7 @@
 <?php
 /**
  * Template Name: Slider Revolution Blank Template
+ * Template Post Type: post, page
  * The template for displaying RevSlider on a blank page
  */
 ?>

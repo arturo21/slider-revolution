@@ -142,13 +142,14 @@ var RevSliderAdmin = new function(){
 			jQuery('.rs-hide-on-fixed').show();
 		}
 		
-		if(textMode == 'full'){
+		/*if(textMode == 'full'){
 			jQuery('.rs-show-on-auto').toggle(100);
 			jQuery('.rs-show-on-auto').show(100);
 		}else{
 			jQuery('.rs-show-on-auto').toggle(100);
 			jQuery('.rs-show-on-auto').hide(100);
-		}
+		}*/
+
 		if(enableFullScreen){
 			jQuery('.rs-show-on-fullscreen').show();
 			jQuery('.rs-hide-on-fullscreen').hide();
@@ -2327,6 +2328,19 @@ var RevSliderAdmin = new function(){
 				
 				UniteAdminRev.ajaxRequest('copy_slide_to_slider', data, function(){
 					jQuery('#close-template').click();
+				});
+			}
+		});
+		
+		jQuery('body').on('click', '.delete_user_template_slide_item', function(){			
+			if(confirm(rev_lang.delete_user_slide)){
+				var data = { slider_id:sliderID };
+				
+				data['slide_id'] = jQuery(this).data('slideid');
+				
+				jQuery(this).closest('.template_group_wrappers').remove();
+				
+				UniteAdminRev.ajaxRequest('delete_template_slide', data, function(){
 				});
 			}
 		});

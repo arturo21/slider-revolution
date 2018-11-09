@@ -1,6 +1,6 @@
 /********************************************
  * REVOLUTION 5.3 EXTENSION - ACTIONS
- * @version: 2.0.4 (24.11.2016)
+ * @version: 2.0.5 (09.12.2016)
  * @requires jquery.themepunch.revolution.js
  * @author ThemePunch
 *********************************************/
@@ -11,7 +11,7 @@ var _R = jQuery.fn.revolution,
 	extension = {	alias:"Actions Min JS",
 					name:"revolution.extensions.actions.min.js",
 					min_core: "5.3",
-					version:"2.0.4"
+					version:"2.0.5"
 			  };
 
 
@@ -118,19 +118,27 @@ if (as)
 			
 			if (a.event==="click" && _nc.hasClass("tp-temporarydisabled")) return false;
 			var tnc = a.layer == "backgroundvideo" ? jQuery(".active-revslide .slotholder .rs-background-video-layer") : a.layer == "firstvideo" ? jQuery(".active-revslide .tp-videolayer").first() : jQuery("#"+a.layer);
-
+			
 			if (a.action=="stoplayer" || a.action=="togglelayer" || a.action=="startlayer") {
 				
 				if (tnc.length>0) 	{
 					var _ = tnc.data();
+					if (_.clicked_time_stamp !==undefined) {
+						if ((new Date().getTime() - _.clicked_time_stamp)>150) {
+							clearTimeout(_.triggerdelayIn);
+							clearTimeout(_.triggerdelayOut);
+						}
+					}
+				 	_.clicked_time_stamp = new Date().getTime();
+					
 					if (a.action=="startlayer" || (a.action=="togglelayer" && tnc.data('animdirection')!="in")) {						
 						_.animdirection= "in";
 						_.triggerstate = "on";
 						_R.toggleState(_.layertoggledby);	
 						
-						if (_R.playAnimationFrame) {
-							clearTimeout(_.triggerdelay);
-							_.triggerdelay = setTimeout(function() {
+						if (_R.playAnimationFrame) {							
+							clearTimeout(_.triggerdelayIn);
+							_.triggerdelayIn = setTimeout(function() {
 								_R.playAnimationFrame({caption:tnc,opt:opt,frame:"frame_0", triggerdirection:"in", triggerframein:"frame_0", triggerframeout:"frame_999"});
 							},(a.delay*1000));							
 						}
@@ -143,8 +151,8 @@ if (as)
 						if (_R.stopVideo) _R.stopVideo(tnc,opt);
 						_R.unToggleState(_.layertoggledby);
 						if (_R.endMoveCaption) {
-							clearTimeout(_.triggerdelay);
-							_.triggerdelay = setTimeout(function() {
+							clearTimeout(_.triggerdelayOut);
+							_.triggerdelayOut = setTimeout(function() {
 								_R.playAnimationFrame({caption:tnc,opt:opt,frame:"frame_999", triggerdirection:"out", triggerframein:"frame_0", triggerframeout:"frame_999"});
 							},(a.delay*1000));
 						}																						

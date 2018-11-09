@@ -1745,7 +1745,7 @@ $global_settings = $operations->getGeneralSettingsValues();
 						<span class="rs-layer-toolbar-box">
 							<span><?php _e("Animation Timing",'revslider'); ?></span>
 							<span class="rs-layer-toolbar-space"></span>
-							<select id="layer-animation-overwrite" name="layer-animation-overwrite" class="rs-layer-input-field" style="width:150px">
+							<select id="layer-animation-overwrite" name="layer-animation-overwrite" class="rs-layer-input-field" style="width:300px">
 								<option value="default" selected="selected"><?php _e("In and Out Animation Default",'revslider'); ?></option>							
 								<option value="waitout"><?php _e("In Animation Default and Out Animation Wait for Trigger",'revslider'); ?></option>
 								<option value="wait"><?php _e("Wait for Trigger",'revslider'); ?></option>
@@ -1754,7 +1754,7 @@ $global_settings = $operations->getGeneralSettingsValues();
 						<span class="rs-layer-toolbar-box">
 							<span><?php _e("Trigger Memory",'revslider'); ?></span>
 							<span class="rs-layer-toolbar-space"></span>
-							<select id="layer-tigger-memory" name="layer-tigger-memory" class="rs-layer-input-field" style="width:150px">
+							<select id="layer-tigger-memory" name="layer-tigger-memory" class="rs-layer-input-field" style="width:300px">
 								<option value="reset" selected="selected"><?php _e("Reset Animation and Trigger States every loop",'revslider'); ?></option>
 								<option value="keep"><?php _e("Keep last selected State",'revslider'); ?></option>
 								
@@ -3126,26 +3126,34 @@ $global_settings = $operations->getGeneralSettingsValues();
 		
 		<# } #>
 		
-		<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_tooltip_event[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:100px; margin-right:30px;">
+		<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_tooltip_event[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:100px; margin-right:10px;">
 			<option <# if( data['tooltip_event'] == 'click' ){ #>selected="selected" <# } #>value="click"><?php _e("Click",'revslider'); ?></option>
 			<option <# if( data['tooltip_event'] == 'mouseenter' ){ #>selected="selected" <# } #>value="mouseenter"><?php _e("Mouse Enter",'revslider'); ?></option>
 			<option <# if( data['tooltip_event'] == 'mouseleave' ){ #>selected="selected" <# } #>value="mouseleave"><?php _e("Mouse Leave",'revslider'); ?></option>
 		</select>
 		
-		<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_action[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>layer_actions rs-layer-input-field" style="width:150px; margin-right:30px;">						
+		<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_action[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>layer_actions rs-layer-input-field" style="width:185px; margin-right:10px;">						
 			<option <# if( data['action'] == 'none' ){ #>selected="selected" <# } #>value="none"><?php _e("Disabled",'revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Link Actions",'revslider'); ?> ----</option>
 			<option <# if( data['action'] == 'link' ){ #>selected="selected" <# } #>value="link"><?php _e("Simple Link",'revslider'); ?></option>
+			<option <# if( data['action'] == 'callback' ){ #>selected="selected" <# } #>value="callback"><?php _e("CallBack",'revslider'); ?></option>												
+			<option <# if( data['action'] == 'scroll_under' ){ #>selected="selected" <# } #>value="scroll_under"><?php _e("Scroll Below Slider",'revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Slide Actions",'revslider'); ?> ----</option>			
 			<option <# if( data['action'] == 'jumpto' ){ #>selected="selected" <# } #>value="jumpto"><?php _e("Jump to Slide",'revslider'); ?></option>
 			<option <# if( data['action'] == 'next' ){ #>selected="selected" <# } #>value="next"><?php _e("Next Slide",'revslider'); ?></option>
 			<option <# if( data['action'] == 'prev' ){ #>selected="selected" <# } #>value="prev"><?php _e("Previous Slide",'revslider'); ?></option>
 			<option <# if( data['action'] == 'pause' ){ #>selected="selected" <# } #>value="pause"><?php _e("Pause Slider",'revslider'); ?></option>								
 			<option <# if( data['action'] == 'resume' ){ #>selected="selected" <# } #>value="resume"><?php _e("Play Slider",'revslider'); ?></option>																
-			<option <# if( data['action'] == 'toggle_slider' ){ #>selected="selected" <# } #>value="toggle_slider"><?php _e("Toggle Slider",'revslider'); ?></option>																
-			<option <# if( data['action'] == 'callback' ){ #>selected="selected" <# } #>value="callback"><?php _e("CallBack",'revslider'); ?></option>												
-			<option <# if( data['action'] == 'scroll_under' ){ #>selected="selected" <# } #>value="scroll_under"><?php _e("Scroll Below Slider",'revslider'); ?></option>
+			<option <# if( data['action'] == 'toggle_slider' ){ #>selected="selected" <# } #>value="toggle_slider"><?php _e("Toggle Slider",'revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Layer Actions",'revslider'); ?> ----</option>			
 			<option <# if( data['action'] == 'start_in' ){ #>selected="selected" <# } #>value="start_in"><?php _e('Start Layer "in" Animation','revslider'); ?></option>
 			<option <# if( data['action'] == 'start_out' ){ #>selected="selected" <# } #>value="start_out"><?php _e('Start Layer "out" Animation','revslider'); ?></option>
 			<option <# if( data['action'] == 'toggle_layer' ){ #>selected="selected" <# } #>value="toggle_layer"><?php _e('Toggle Layer Animation','revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Media Actions",'revslider'); ?> ----</option>			
 			<option <# if( data['action'] == 'start_video' ){ #>selected="selected" <# } #>value="start_video"><?php _e('Start Media','revslider'); ?></option>
 			<option <# if( data['action'] == 'stop_video' ){ #>selected="selected" <# } #>value="stop_video"><?php _e('Stop Media','revslider'); ?></option>
 			<option <# if( data['action'] == 'toggle_video' ){ #>selected="selected" <# } #>value="toggle_video"><?php _e('Toggle Media','revslider'); ?></option>			
@@ -3153,29 +3161,34 @@ $global_settings = $operations->getGeneralSettingsValues();
 			<option <# if( data['action'] == 'unmute_video' ){ #>selected="selected" <# } #>value="unmute_video"><?php _e('Unmute Media','revslider'); ?></option>
 			<option <# if( data['action'] == 'toggle_mute_video' ){ #>selected="selected" <# } #>value="toggle_mute_video"><?php _e('Toggle Mute Media','revslider'); ?></option>			
 			<option <# if( data['action'] == 'toggle_global_mute_video' ){ #>selected="selected" <# } #>value="toggle_global_mute_video"><?php _e('Toggle Mute All Media','revslider'); ?></option>			
-			<option <# if( data['action'] == 'simulate_click' ){ #>selected="selected" <# } #>value="simulate_click"><?php _e('Simulate Click','revslider'); ?></option>
-			<option <# if( data['action'] == 'toggle_class' ){ #>selected="selected" <# } #>value="toggle_class"><?php _e('Toggle Layer Class','revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Fullscreen  Actions",'revslider'); ?> ----</option>
 			<option <# if( data['action'] == 'togglefullscreen' ){ #>selected="selected" <# } #>value="togglefullscreen"><?php _e("Toggle FullScreen",'revslider'); ?></option>
 			<option <# if( data['action'] == 'gofullscreen' ){ #>selected="selected" <# } #>value="gofullscreen"><?php _e("Go FullScreen",'revslider'); ?></option>
 			<option <# if( data['action'] == 'exitfullscreen' ){ #>selected="selected" <# } #>value="exitfullscreen"><?php _e("Exit FullScreen",'revslider'); ?></option>
+			<option disabled></option>
+			<option disabled>---- <?php _e("Advanced  Actions",'revslider'); ?> ----</option>
+			<option <# if( data['action'] == 'simulate_click' ){ #>selected="selected" <# } #>value="simulate_click"><?php _e('Simulate Click','revslider'); ?></option>
+			<option <# if( data['action'] == 'toggle_class' ){ #>selected="selected" <# } #>value="toggle_class"><?php _e('Toggle Layer Class','revslider'); ?></option>
+			
 			<?php do_action( 'rs_action_add_layer_action' ); ?>
 		</select>
 		<!-- SIMPLE LINK PARAMETERS -->
 		<span class="action-link-wrapper" style="display:none;">
-			<span><?php _e("Link Url",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<input type="text" style="width:150px;margin-right:30px;" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_image_link[]" value="{{ data['image_link'] }}">
+			<!--<span><?php _e("Link Url",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<input type="text" style="width:150px;margin-right:10px;" placeholder="<?php _e("Link Url",'revslider'); ?>" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_image_link[]" value="{{ data['image_link'] }}">
 
-			<span><?php _e("Link Target",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_link_open_in[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px;margin-right:30px;">
+			<!--<span><?php _e("Link Target",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_link_open_in[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px;margin-right:10px;">
 				<option <# if( data['link_open_in'] == '_same' ){ #>selected="selected" <# } #>value="_self"><?php _e("Same Window",'revslider'); ?></option>
 				<option <# if( data['link_open_in'] == '_blank' ){ #>selected="selected" <# } #>value="_blank"><?php _e("New Window",'revslider'); ?></option>
 			</select>
 			
-			<span><?php _e("Link Type",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_link_type[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px">
+			<!--<span><?php _e("Link Type",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_link_type[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:10px">
 				<option <# if( data['link_type'] == 'jquery' ){ #>selected="selected" <# } #>value="jquery"><?php _e("jQuery Link",'revslider'); ?></option>
 				<option <# if( data['link_type'] == 'a' ){ #>selected="selected" <# } #>value="a"><?php _e("a Tag Link",'revslider'); ?></option>
 			</select>
@@ -3184,39 +3197,39 @@ $global_settings = $operations->getGeneralSettingsValues();
 
 		<!-- JUMP TO SLIDE -->
 		<span class="action-jump-to-slide" style="display:none;">
-			<span><?php _e("Jump To",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>jump_to_slide[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px" data-selectoption="{{ data['jump_to_slide'] }}">
+			<!--<span><?php _e("Jump To",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>jump_to_slide[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:10px" data-selectoption="{{ data['jump_to_slide'] }}">
 			</select>		
 		</span>
 
 		<!-- SCROLL OFFSET -->
 		<span class="action-scrollofset" style="display:none;">						
-			<span><?php _e("Scroll Offset",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space" ></span>
-			<input type="text" style="width:125px;" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_scrolloffset[]" value="{{ data['scrolloffset'] }}">						
+			<!--<span><?php _e("Scroll Offset",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space" ></span>-->
+			<input type="text" style="width:125px;; margin-right:10px" placeholder="<?php _e("Scroll Offset",'revslider'); ?>" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_scrolloffset[]" value="{{ data['scrolloffset'] }}">						
 		</span>
 
 		<!-- CALLBACK FUNCTION-->
 		<span class="action-callback" style="display:none;">						
-			<span><?php _e("Function",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space" ></span>
-			<input type="text" style="width:250px;" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_actioncallback[]" value="{{ data['actioncallback'] }}">						
+			<!--<span><?php _e("Function",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space" ></span>-->
+			<input type="text" style="width:250px;; margin-right:10px" placeholder="<?php _e("Function",'revslider'); ?>" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_actioncallback[]" value="{{ data['actioncallback'] }}">						
 		</span>
 
 		<span class="action-target-layer" style="display:none;">
-			<span><?php _e("Target",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_target[]" id="layer_target" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:100px;margin-right:30px;" data-selectoption="{{ data['layer_target'] }}">
+			<!--<span><?php _e("Target",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>layer_target[]" id="layer_target" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:100px;margin-right:10px;" data-selectoption="{{ data['layer_target'] }}">
 			</select>
 			
 		</span>		
 
 
 		<span class="action-toggle_layer" style="display:none;">
-			<span class="rs-layer-toolbar-space"></span>
-			<span><?php _e("at Start",'revslider'); ?></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>toggle_layer_type[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px">
+			<!--<span class="rs-layer-toolbar-space"></span>
+			<span><?php _e("at Start",'revslider'); ?></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>toggle_layer_type[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:10px">
 				<option <# if( data['toggle_layer_type'] == 'visible' ){ #>selected="selected" <# } #>value="visible"><?php _e("Play In Animation",'revslider'); ?></option>
 				<option <# if( data['toggle_layer_type'] == 'hidden' ){ #>selected="selected" <# } #>value="hidden"><?php _e("Keep Hidden",'revslider'); ?></option>
 			</select>
@@ -3224,26 +3237,26 @@ $global_settings = $operations->getGeneralSettingsValues();
 
 		<!-- TOGGLE CLASS FUNCTION-->
 		<span class="action-toggleclass" style="display:none;">	
-			<span class="rs-layer-toolbar-space"></span>
+			<!--<span class="rs-layer-toolbar-space"></span>
 			<span><?php _e("Class",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space" ></span>
-			<input type="text" style="width:100px;" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_toggleclass[]" value="{{ data['toggle_class'] }}">
+			<span class="rs-layer-toolbar-space" ></span>-->
+			<input type="text" style="width:100px;margin-right:10px" placeholder="<?php _e("Class to Toggle",'revslider'); ?>" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field"  name="<# if(data['edit'] == false){ #>no_<# } #>layer_toggleclass[]" value="{{ data['toggle_class'] }}">
 		</span>
 		
 		<!-- Trigger States -->
 		<span class="action-triggerstates" style="display: none; white-space:nowrap">
-			<span class="rs-layer-toolbar-space" style="margin-left:42px"></span>
+			<!--<span class="rs-layer-toolbar-space" style="margin-left:42px"></span>
 			<span><?php _e("Animation Timing",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space" ></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>do-layer-animation-overwrite[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:23px">
+			<span class="rs-layer-toolbar-space" ></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>do-layer-animation-overwrite[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:10px">
 				<option value="default"><?php _e("In and Out Animation Default",'revslider'); ?></option>
 				<option value="waitout"><?php _e("In Animation Default and Out Animation Wait for Trigger",'revslider'); ?></option>
 				<option value="wait"><?php _e("Wait for Trigger",'revslider'); ?></option>
 			</select>
-			<span class="rs-layer-toolbar-space" ></span>
+			<!--<span class="rs-layer-toolbar-space" ></span>
 			<span><?php _e("Trigger Memory",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space" ></span>
-			<select name="<# if(data['edit'] == false){ #>no_<# } #>do-layer-trigger-memory[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px">
+			<span class="rs-layer-toolbar-space" ></span>-->
+			<select name="<# if(data['edit'] == false){ #>no_<# } #>do-layer-trigger-memory[]" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>rs-layer-input-field" style="width:150px; margin-right:10px">
 				<option value="reset"><?php _e("Reset Animation and Trigger States every loop",'revslider'); ?></option>
 				<option value="keep"><?php _e("Keep last selected State",'revslider'); ?></option>
 			</select>
@@ -3252,9 +3265,9 @@ $global_settings = $operations->getGeneralSettingsValues();
 		<?php do_action( 'rs_action_add_layer_action_details',$slider ); ?>
 
 		<span class="action-delay-wrapper" style="display: none; white-space:nowrap">			
-			<span><?php _e("Delay",'revslider'); ?></span>
-			<span class="rs-layer-toolbar-space"></span>
-			<input type="text" style="width:60px;margin-top:-2px" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field" name="<# if(data['edit'] == false){ #>no_<# } #>layer_action_delay[]" value="{{ data['action_delay'] }}"> <?php _e('ms', 'revslider'); ?>
+			<!--<span><?php _e("Delay",'revslider'); ?></span>
+			<span class="rs-layer-toolbar-space"></span>-->
+			<input type="text" style="width:60px;margin-top:-2px" placeholder="<?php _e("Delay",'revslider'); ?>" class="<# if(data['edit'] == false){ #>rs_disabled_field <# } #>textbox-caption rs-layer-input-field" name="<# if(data['edit'] == false){ #>no_<# } #>layer_action_delay[]" value="{{ data['action_delay'] }}"> <?php _e('ms', 'revslider'); ?>
 		</span>
 
 
@@ -3484,6 +3497,7 @@ $global_settings = $operations->getGeneralSettingsValues();
 				jQuery('#mastertimer-wrapper').css({maxWidth:bawi});
 				jQuery('.layers-wrapper').css({maxWidth:bawi-222});
 				jQuery('.master-rightcell .layers-wrapper, #divLayers-wrapper').perfectScrollbar("update");
+				jQuery('#nls-wrapper').css({minWidth:(jQuery('#thelayer-editor-wrapper').width()+80)});
 			});
 
 			jQuery('#mastertimer-wrapper').resizable({
@@ -3510,10 +3524,11 @@ $global_settings = $operations->getGeneralSettingsValues();
 					jQuery('#mastertimer-curtime-b').height(maxh+3);
 				}
 			});
-			jQuery('#sticky_layersettings_toggle').click(function() {
+			jQuery('#sticky_layersettings_toggle, #stickystylesbutton_wrap').click(function() {
 				jQuery('#sticky_layersettings_toggle').toggleClass("selected");
 				//admin ajax
 				UniteAdminRev.ajaxRequest('slide_editor_sticky_menu', {'set_sticky': jQuery('#sticky_layersettings_toggle').hasClass('selected')}, function(response){}, true);
+				handleStickySlideMenu();
 			})
 
 			function handleStickySlideMenu() {
@@ -3526,23 +3541,29 @@ $global_settings = $operations->getGeneralSettingsValues();
 			 	function manageFixedMenu() {
 			 		
 			 		var tp = jQuery(window).scrollTop(),
-			 			wph = jQuery('#wpadminbar').height();
-			 		if (mo<tp+wph && !jQuery('#sticky_layersettings_toggle').hasClass("selected")) {
-			 			m.css({position:"fixed",top:wph+"px", maxWidth:jQuery('#tp_rs_a_form').width()+"px"});
-			 			f.css({marginBottom:(m.height())+"px"})
+			 			wph = jQuery('#wpadminbar').height(),
+			 			dh = jQuery(document).height();
+			 		
+			 		if (mo<tp+wph && !jQuery('#sticky_layersettings_toggle').hasClass("selected")) {			 						 			
+			 			f.css({marginBottom:(m.height())+"px"});
+			 			m.css({position:"fixed",top:wph+"px", maxWidth:jQuery('#tp_rs_a_form').width()+"px"});			 			
 			 			m.addClass("isfixed");
-			 		} else {
-			 			mo = m.offset().top;
+			 			jQuery('#stickystylesbutton_wrap').removeClass("notyetsticky");
+			 		} else {			 						 			
 			 			m.css({position:"relative",top:"auto", maxWidth:"100%"});	
 			 			m.removeClass("isfixed");
 			 			f.css({marginBottom:"0px"});
+			 			mo = m.offset().top;			
+			 			jQuery('#stickystylesbutton_wrap').addClass("notyetsticky"); 		
 			 		}
 			 					 	
 			 	}
 			 	jQuery(window).scroll(manageFixedMenu);			 	
 			 	setTimeout(manageFixedMenu,100);
 			}
+
 			handleStickySlideMenu();
+
 			<?php
 			$stage_collapse = RevSliderBase::getVar($global_settings, "stage_collapse",'off');
 			if($stage_collapse == 'on'){
@@ -3558,6 +3579,8 @@ $global_settings = $operations->getGeneralSettingsValues();
 				},100);
 			});
 			UniteAdminRev.initVideoDef();
+
+			
 		});
 	</script>
 </div>

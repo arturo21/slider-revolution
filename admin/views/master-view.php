@@ -340,6 +340,7 @@ $single_page_creation = RevSliderFunctions::getVal($glob_vals, "single_page_crea
 </script>
 <?php
 $cvc = get_option('rs_cache_overlay', RevSliderGlobals::SLIDER_REVISION);
+
 if(version_compare(RevSliderGlobals::SLIDER_REVISION, $cvc, '>')){
 	?>
 	<div id="rs-cache-info-dialog" title="">
@@ -356,6 +357,7 @@ if(version_compare(RevSliderGlobals::SLIDER_REVISION, $cvc, '>')){
 		});				
 	</script>
 	<?php 
+	$cvc = RevSliderGlobals::SLIDER_REVISION;
 }
 update_option('rs_cache_overlay', $cvc);
 ?>

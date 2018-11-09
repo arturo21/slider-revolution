@@ -771,7 +771,7 @@ span.description 					{	font-size: 13px;font-style: italic;color: #999;font-weig
 	-	MINI TOOLBAR	-
 ********************************/
 
-#viewWrapper .rs-mini-toolbar						{	position:absolute;right:0px;top:0px; z-index:5000;}
+#viewWrapper .rs-mini-toolbar						{	position:absolute;right:0px;top:0px; z-index:150000; padding:0px;margin:0px;}
 
 #viewWrapper .rs-mini-toolbar .rs-mini-toolbar-button {	display:inline-block; margin-left:-4px;}
 #viewWrapper .rs-mini-toolbar .button-primary		{	display:inline-block; height:55px !important; line-height:55px !important; margin:0;padding-left:19px !important;}
@@ -781,12 +781,15 @@ span.description 					{	font-size: 13px;font-style: italic;color: #999;font-weig
 #viewWrapper .rs-mini-toolbar .mini-toolbar-text  	{	display: inline-block;width:0; visibility: hidden; opacity: 0;}
 
 
-#viewWrapper .rs-mini-toolbar.sticky 				{	position: fixed !important;top:32px; right:20px;line-height: 36px; height:36px;}
-#viewWrapper .rs-mini-toolbar.sticky .button-primary{	height:36px !important;line-height:36px !important; padding-left:10px !important;}
+#viewWrapper .rs-mini-toolbar.sticky 				{	position: fixed !important;top:0px; right:20px;line-height: 32px; height:32px;}
+#viewWrapper .rs-mini-toolbar.sticky .button-primary{	height:32px !important;line-height:32px !important; padding-left:10px !important;}
 #viewWrapper .rs-mini-toolbar.sticky .button-primary i { margin-right:0px !important}
 #viewWrapper .rs-mini-toolbar.sticky .rs-mini-toolbar-button:hover .mini-toolbar-text  {	margin-left:10px;}
 
-
+#stickystylesbutton_wrap 											{	transition: transform 0.3s; transform: translateY(0px); }
+#viewWrapper .rs-mini-toolbar #stickystylesbutton_wrap 				{	display:none;}
+#viewWrapper .rs-mini-toolbar.sticky #stickystylesbutton_wrap		{	display: inline-block;}
+#stickystylesbutton_wrap.notyetsticky 								{	transform: translateY(-32px);  }
 
 /* PREVIEWER IN SLIDER SETTINGS */
  .rsp-view-cell									{	width:25%; float:left;display:block;  box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box; border-right:1px solid #e5e5e5; min-height:530px;}

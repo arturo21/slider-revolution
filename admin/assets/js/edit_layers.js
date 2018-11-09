@@ -3094,12 +3094,12 @@ var UniteLayersRev = new function(){
 		li.find('.action-target-layer').hide();
 		li.find('.action-callback').hide();
 		li.find('.action-toggle_layer').hide();
-		li.find('.action-toggleclass').hide();
+		li.find('.action-toggleclass').hide();		
 		li.find('.action-delay-wrapper').show();
 		
 		
 		switch (value) {
-			case "none":
+			case "none":				
 				li.find('.action-delay-wrapper').hide();				
 			break;
 			case "link":
@@ -6149,8 +6149,9 @@ var UniteLayersRev = new function(){
 				} else {				
 					var originalchain = chain;						
 					chain = chain == undefined || chain.length==0 ? key : chain+"."+key;				
-					// CHECK IF THE VALUES ARE DIFFERENT					
-					if (((val!==b[key] && parseInt(val,0) != parseInt(b[key],0) && val!=undefined && b[key]!=undefined) && key!="renderedData"))	{	
+					// CHECK IF THE VALUES ARE DIFFERENT	
+					
+					if (b!==undefined && ((val!==b[key] && parseInt(val,0) != parseInt(b[key],0) && val!=undefined && b[key]!=undefined) && key!="renderedData"))	{	
 						
 						if ((t.arrLayersChanges["undo"] && t.arrLayersChanges["undo"].length==0) ||  t.arrLayersChanges["undo"][t.arrLayersChanges["undo"].length-1].chain != chain) {
 							var obj = checkKeyGroups(chain);						
@@ -6876,9 +6877,9 @@ var UniteLayersRev = new function(){
 		objLayer.internal_class = objLayer.internal_class || '';
 		
 		// Enabled Hover ?
-		objLayer['hover'] = objLayer['hover'] || false;
+		objLayer['hover'] = objLayer['hover']!==undefined ? objLayer['hover'] : false;
 
-		objLayer['alias'] = objLayer['alias'] || u.getSortboxText(objLayer.text).toLowerCase();
+		objLayer['alias'] = objLayer['alias']!==undefined ? objLayer['alias'] : u.getSortboxText(objLayer.text).toLowerCase();
 
 		// PRESET DELETED INFO
 		objLayer.layer_unavailable = false;
@@ -6886,14 +6887,14 @@ var UniteLayersRev = new function(){
 		objLayer.createdOnInit = objLayer.createdOnInit != undefined ? objLayer.createdOnInit : isInit==true ? true : false;
 		
 		//background image settings for layer
-		objLayer.layer_bg_position = objLayer.layer_bg_position 	|| "center center";
-		objLayer.layer_bg_size = objLayer.layer_bg_size 	|| "cover";
-		objLayer.layer_bg_repeat = objLayer.layer_bg_repeat 	|| "no-repeat";
+		objLayer.layer_bg_position = objLayer.layer_bg_position!==undefined ? objLayer.layer_bg_position : "center center";
+		objLayer.layer_bg_size = objLayer.layer_bg_size !== undefined ? objLayer.layer_bg_size : "cover";
+		objLayer.layer_bg_repeat = objLayer.layer_bg_repeat !== undefined ? objLayer.layer_bg_repeat : "no-repeat";
 		
 		
 		//set Loop Animations
-		objLayer.loop_animation = objLayer.loop_animation 	|| "none";
-		objLayer.loop_easing = objLayer.loop_easing 		|| "linearEaseNone";
+		objLayer.loop_animation = objLayer.loop_animation!==undefined ? objLayer.loop_animation : "none";
+		objLayer.loop_easing = objLayer.loop_easing!==undefined ? objLayer.loop_easing : "linearEaseNone";
 		objLayer.loop_speed = objLayer.loop_speed != undefined ? objLayer.loop_speed :  2;
 		objLayer.loop_startdeg = objLayer.loop_startdeg != undefined ? objLayer.loop_startdeg : -20;
 		objLayer.loop_enddeg = objLayer.loop_enddeg != undefined ? 	objLayer.loop_enddeg : 20;
@@ -6910,12 +6911,12 @@ var UniteLayersRev = new function(){
 
 		objLayer.layer_blend_mode = objLayer.layer_blend_mode != undefined ? objLayer.layer_blend_mode : "normal";
 		
-		objLayer.html_tag = objLayer.html_tag 		|| "div";
-		objLayer.parallax_layer_ddd_zlevel = objLayer.parallax_layer_ddd_zlevel 		|| "front";
+		objLayer.html_tag = objLayer.html_tag!==undefined ? objLayer.html_tag :  "div";
+		objLayer.parallax_layer_ddd_zlevel = objLayer.parallax_layer_ddd_zlevel !==undefined ? objLayer.parallax_layer_ddd_zlevel : "front";
 		
 		// set Mask Animation
-		objLayer.mask_start = objLayer.mask_start	 		|| false;
-		objLayer.mask_end = objLayer.mask_end		 		|| false;
+		objLayer.mask_start = objLayer.mask_start !== undefined ? objLayer.mask_start : false;
+		objLayer.mask_end = objLayer.mask_end !== undefined ? objLayer.mask_end : false;
 
 		// Hover Force
 		//objLayer.force_hover = objLayer.force_hover===undefined ? true : objLayer.force_hover;
@@ -6924,63 +6925,59 @@ var UniteLayersRev = new function(){
 		
 		// Column Break At
 		if (objLayer.type==="row")
-			objLayer.column_break_at = objLayer.column_break_at || "mobile";
+			objLayer.column_break_at = objLayer.column_break_at!==undefined ? objLayer.column_break_at : "mobile";
 
 		// Set Reverse Basics					
-		objLayer.x_start_reverse = objLayer.x_start_reverse || false;
-		objLayer.y_start_reverse = objLayer.y_start_reverse || false;
-		objLayer.x_end_reverse = objLayer.x_end_reverse || false;
-		objLayer.y_end_reverse = objLayer.y_end_reverse || false;
-		objLayer.x_rotate_start_reverse = objLayer.x_rotate_start_reverse || false;
-		objLayer.y_rotate_start_reverse = objLayer.y_rotate_start_reverse || false;
-		objLayer.z_rotate_start_reverse = objLayer.z_rotate_start_reverse || false;
-		objLayer.x_rotate_end_reverse = objLayer.x_rotate_end_reverse || false;
-		objLayer.y_rotate_end_reverse = objLayer.y_rotate_end_reverse || false;
-		objLayer.z_rotate_end_reverse = objLayer.z_rotate_end_reverse || false;
-		objLayer.scale_x_start_reverse = objLayer.scale_x_start_reverse || false;
-		objLayer.scale_y_start_reverse = objLayer.scale_y_start_reverse || false;
-		objLayer.scale_x_end_reverse = objLayer.scale_x_end_reverse || false;
-		objLayer.scale_y_end_reverse = objLayer.scale_y_end_reverse || false;
-		objLayer.skew_x_start_reverse = objLayer.skew_x_start_reverse || false;
-		objLayer.skew_y_start_reverse = objLayer.skew_y_start_reverse || false;
-		objLayer.skew_x_end_reverse = objLayer.skew_x_end_reverse || false;
-		objLayer.skew_y_end_reverse = objLayer.skew_y_end_reverse || false;
-		objLayer.mask_x_start_reverse = objLayer.mask_x_start_reverse || false;
-		objLayer.mask_y_start_reverse = objLayer.mask_y_start_reverse || false;
-		objLayer.mask_x_end_reverse = objLayer.mask_x_end_reverse || false;
-		objLayer.mask_y_end_reverse = objLayer.mask_y_end_reverse || false;
+		objLayer.x_start_reverse = objLayer.x_start_reverse!==undefined ? objLayer.x_start_reverse : false;
+		objLayer.y_start_reverse = objLayer.y_start_reverse!==undefined ? objLayer.y_start_reverse : false;
+		objLayer.x_end_reverse = objLayer.x_end_reverse!==undefined ? objLayer.x_end_reverse : false;
+		objLayer.y_end_reverse = objLayer.y_end_reverse!==undefined ? objLayer.y_end_reverse : false;
+		objLayer.x_rotate_start_reverse = objLayer.x_rotate_start_reverse!==undefined ? objLayer.x_rotate_start_reverse : false;
+		objLayer.y_rotate_start_reverse = objLayer.y_rotate_start_reverse!==undefined ? objLayer.y_rotate_start_reverse : false;
+		objLayer.z_rotate_start_reverse = objLayer.z_rotate_start_reverse!==undefined ? objLayer.z_rotate_start_reverse : false;
+		objLayer.x_rotate_end_reverse = objLayer.x_rotate_end_reverse!==undefined ? objLayer.x_rotate_end_reverse : false;
+		objLayer.y_rotate_end_reverse = objLayer.y_rotate_end_reverse!==undefined ? objLayer.y_rotate_end_reverse : false;
+		objLayer.z_rotate_end_reverse = objLayer.z_rotate_end_reverse!==undefined ? objLayer.z_rotate_end_reverse : false;
+		objLayer.scale_x_start_reverse = objLayer.scale_x_start_reverse!==undefined ? objLayer.scale_x_start_reverse : false;
+		objLayer.scale_y_start_reverse = objLayer.scale_y_start_reverse!==undefined ? objLayer.scale_y_start_reverse : false;
+		objLayer.scale_x_end_reverse = objLayer.scale_x_end_reverse!==undefined ? objLayer.scale_x_end_reverse : false;
+		objLayer.scale_y_end_reverse = objLayer.scale_y_end_reverse!==undefined ? objLayer.scale_y_end_reverse : false;
+		objLayer.skew_x_start_reverse = objLayer.skew_x_start_reverse!==undefined ? objLayer.skew_x_start_reverse : false;
+		objLayer.skew_y_start_reverse = objLayer.skew_y_start_reverse!==undefined ? objLayer.skew_y_start_reverse : false;
+		objLayer.skew_x_end_reverse = objLayer.skew_x_end_reverse!==undefined ? objLayer.skew_x_end_reverse : false;
+		objLayer.skew_y_end_reverse = objLayer.skew_y_end_reverse!==undefined ? objLayer.skew_y_end_reverse : false;
+		objLayer.mask_x_start_reverse = objLayer.mask_x_start_reverse!==undefined ? objLayer.mask_x_start_reverse : false;
+		objLayer.mask_y_start_reverse = objLayer.mask_y_start_reverse!==undefined ? objLayer.mask_y_start_reverse : false;
+		objLayer.mask_x_end_reverse = objLayer.mask_x_end_reverse!==undefined ? objLayer.mask_x_end_reverse : false;
+		objLayer.mask_y_end_reverse = objLayer.mask_y_end_reverse!==undefined ? objLayer.mask_y_end_reverse : false;
 
-		objLayer.mask_x_start = objLayer.mask_x_start 			|| 0;
-		objLayer.mask_y_start = objLayer.mask_y_start 			|| 0;
-		objLayer.mask_speed_start = objLayer.mask_speed_start 	|| "inherit";
-		objLayer.mask_ease_start = objLayer.mask_ease_start 	|| "inherit";
+		objLayer.mask_x_start = objLayer.mask_x_start !==undefined ? objLayer.mask_x_start : 0;
+		objLayer.mask_y_start = objLayer.mask_y_start !==undefined ? objLayer.mask_y_start : 0;
+		objLayer.mask_speed_start = objLayer.mask_speed_start !==undefined ? objLayer.mask_speed_start : "inherit";
+		objLayer.mask_ease_start = objLayer.mask_ease_start !==undefined ? objLayer.mask_ease_start : "inherit";
 		
-		objLayer.mask_x_end = objLayer.mask_x_end 			|| 0;
-		objLayer.mask_y_end = objLayer.mask_y_end 			|| 0;
-		objLayer.mask_speed_end = objLayer.mask_speed_end 	|| "inherit";
-		objLayer.mask_ease_end = objLayer.mask_ease_end 	|| "inherit";
+		objLayer.mask_x_end = objLayer.mask_x_end !==undefined ? objLayer.mask_x_end : 0;
+		objLayer.mask_y_end = objLayer.mask_y_end !==undefined ? objLayer.mask_y_end : 0;
+		objLayer.mask_speed_end = objLayer.mask_speed_end !==undefined ? objLayer.mask_speed_end : "inherit";
+		objLayer.mask_ease_end = objLayer.mask_ease_end !==undefined ? objLayer.mask_ease_end : "inherit";
 		
-		objLayer.alt_option = objLayer.alt_option			|| 'media_library';
-		objLayer.alt = objLayer.alt							|| '';
+		objLayer.alt_option = objLayer.alt_option !==undefined ? objLayer.alt_option : 'media_library';
+		objLayer.alt = objLayer.alt !==undefined ? objLayer.alt : '';
 
 		// Layer Action
-		objLayer.layer_action = objLayer.layer_action || {};
-		objLayer.layer_action.tooltip_event = objLayer.layer_action.tooltip_event || [];
-		objLayer.layer_action.action = objLayer.layer_action.action || [];
-		objLayer.layer_action.image_link = objLayer.layer_action.image_link || [];
-		objLayer.layer_action.link_open_in = objLayer.layer_action.link_open_in || [];
-		objLayer.layer_action.jump_to_slide = objLayer.layer_action.jump_to_slide || [];
-		objLayer.layer_action.scrollunder_offset = objLayer.layer_action.scrollunder_offset || [];
-		objLayer.layer_action.actioncallback = objLayer.layer_action.actioncallback || [];
-		objLayer.layer_action.layer_target = objLayer.layer_action.layer_target || [];
-		objLayer.layer_action.link_type = objLayer.layer_action.link_type || [];
-		objLayer.layer_action.action_delay = objLayer.layer_action.action_delay || [];
-		objLayer.layer_action.toggle_layer_type = objLayer.layer_action.toggle_layer_type || [];
-		objLayer.layer_action.toggle_class = objLayer.layer_action.toggle_class || [];
-		
-		
-
-		
+		objLayer.layer_action = objLayer.layer_action !== undefined ?  objLayer.layer_action : {};
+		objLayer.layer_action.tooltip_event = objLayer.layer_action.tooltip_event !== undefined ? objLayer.layer_action.tooltip_event : [];
+		objLayer.layer_action.action = objLayer.layer_action.action !== undefined ? objLayer.layer_action.action : [];
+		objLayer.layer_action.image_link = objLayer.layer_action.image_link !== undefined ? objLayer.layer_action.image_link : [];
+		objLayer.layer_action.link_open_in = objLayer.layer_action.link_open_in !== undefined ? objLayer.layer_action.link_open_in : [];
+		objLayer.layer_action.jump_to_slide = objLayer.layer_action.jump_to_slide !== undefined ? objLayer.layer_action.jump_to_slide : [];
+		objLayer.layer_action.scrollunder_offset = objLayer.layer_action.scrollunder_offset !== undefined ? objLayer.layer_action.scrollunder_offset : [];
+		objLayer.layer_action.actioncallback = objLayer.layer_action.actioncallback !== undefined ? objLayer.layer_action.actioncallback : [];
+		objLayer.layer_action.layer_target = objLayer.layer_action.layer_target !== undefined ? objLayer.layer_action.layer_target : [];
+		objLayer.layer_action.link_type = objLayer.layer_action.link_type !== undefined ? objLayer.layer_action.link_type : [];
+		objLayer.layer_action.action_delay = objLayer.layer_action.action_delay !== undefined ? objLayer.layer_action.action_delay : [];
+		objLayer.layer_action.toggle_layer_type = objLayer.layer_action.toggle_layer_type !== undefined ? objLayer.layer_action.toggle_layer_type : [];
+		objLayer.layer_action.toggle_class = objLayer.layer_action.toggle_class !== undefined ? objLayer.layer_action.toggle_class : [];
 		
 		objLayer = t.getVal(objLayer, 'max_height') == undefined ? 
 			t.setVal(objLayer, 'max_height', "auto", true) : 
@@ -7072,24 +7069,24 @@ var UniteLayersRev = new function(){
 		}
 
 		//set animation:
-		objLayer.hiddenunder = objLayer.hiddenunder || false;	
-		objLayer.resizeme = objLayer.resizeme || true;			
-		objLayer['seo-optimized'] = objLayer['seo-optimized'] || false;
+		objLayer.hiddenunder = (objLayer.hiddenunder !== undefined) ? objLayer.hiddenunder : false;
+		objLayer.resizeme = (objLayer.resizeme !== undefined) ? objLayer.resizeme : true;
+		objLayer['seo-optimized'] = (objLayer['seo-optimized'] !== undefined) ? objLayer['seo-optimized'] : false;
 		
 		//set image link		
-		objLayer.link = objLayer.link || "";
+		objLayer.link = (objLayer.link !== undefined) ? objLayer.link : "";
 
 		//set image link open in
-		objLayer.link_open_in = objLayer.link_open_in || "same";
+		objLayer.link_open_in = (objLayer.link_open_in !== undefined) ? objLayer.link_open_in : "same";
 
 		//set slide link:		
-		objLayer.link_slide = objLayer.link_slide || "nothing";
+		objLayer.link_slide = (objLayer.link_slide !== undefined) ? objLayer.link_slide : "nothing";
 
 		//set scroll under offset		
-		objLayer.scrollunder_offset = objLayer.scrollunder_offset || "";
+		objLayer.scrollunder_offset = (objLayer.scrollunder_offset !== undefined) ? objLayer.scrollunder_offset : "";
 
 		//set style, if empty, add first style from the list		
-			objLayer.style = objLayer.style || '';
+		objLayer.style = (objLayer.style !== undefined) ? objLayer.style : '';
 		
 		
 		
@@ -7102,18 +7099,18 @@ var UniteLayersRev = new function(){
 		objLayer['resize-full'] = objLayer['resize-full'] !== undefined ? objLayer['resize-full'] : true;				
 		objLayer['hiddenunder'] = objLayer['hiddenunder'] !== undefined ? objLayer['hiddenunder'] : false;	
 		objLayer['show-on-hover'] = objLayer['show-on-hover'] !== undefined ? objLayer['show-on-hover'] : false;				
-		objLayer.basealign = objLayer.basealign || 'grid';						
+		objLayer.basealign = (objLayer.basealign !== undefined) ? objLayer.basealign : 'grid';						
 		objLayer.responsive_offset = objLayer.responsive_offset!==undefined ? objLayer.responsive_offset : true;				
 		objLayer.style = jQuery.trim(objLayer.style);
 		
 
 		if(isInit == false && objLayer.type == "text" && (!objLayer.style || objLayer.style == ""))	do_style_reset = true;				
 		
-		objLayer['lazy-load'] = objLayer['lazy-load'] || 'auto';			
-		objLayer['image-size'] = objLayer['image-size'] || 'auto';
+		objLayer['lazy-load'] = (objLayer['lazy-load'] !== undefined) ? objLayer['lazy-load'] : 'auto';			
+		objLayer['image-size'] = (objLayer['image-size'] !== undefined) ? objLayer['image-size'] : 'auto';
 		
 		//if(objLayer.type == "group"){
-			objLayer['css-position'] = objLayer['css-position'] || 'relative';
+			objLayer['css-position'] = (objLayer['css-position'] !== undefined) ? objLayer['css-position'] : 'relative';
 		//}
 		//add time
 
@@ -9701,6 +9698,8 @@ var UniteLayersRev = new function(){
 		else
 			jQuery("#layer_hidden").prop("checked",false);
 		
+		
+		
 		if(objLayer.resizeme == "true" || objLayer.resizeme == true)
 			jQuery("#layer_resizeme").prop("checked",true);
 		else
@@ -11684,7 +11683,6 @@ var UniteLayersRev = new function(){
 			jQuery(this).data('selectoption', jQuery(this).find('option:selected').val());
 		});
 		
-		
 		jQuery('body').on('change', 'select[name="do-layer-animation-overwrite[]"]', function(){
 			var do_sel = jQuery(this).closest('li').find('select[name="layer_target[]"] option:selected').val();
 			var new_val = jQuery(this).val();
@@ -11698,6 +11696,12 @@ var UniteLayersRev = new function(){
 			update_layer_changes = false;
 			t.updateLayer(lid,objUpdate);
 			update_layer_changes = true;
+			
+			var clayer = t.getLayer(t.selectedLayerSerial);
+			if(clayer.unique_id == do_sel){
+				//change the current parent sel box
+				jQuery('#layer-animation-overwrite option[value="'+new_val+'"]').attr('selected', true);
+			}
 			
 			jQuery('select[name="layer_target[]"] option:selected').each(function(){
 				if(jQuery(this).val() == do_sel){
@@ -11719,6 +11723,12 @@ var UniteLayersRev = new function(){
 			update_layer_changes = false;
 			t.updateLayer(lid,objUpdate);
 			update_layer_changes = true;
+			
+			var clayer = t.getLayer(t.selectedLayerSerial);
+			if(clayer.unique_id == do_sel){
+				//change the current parent sel box
+				jQuery('#layer-tigger-memory option[value="'+new_val+'"]').attr('selected', true);
+			}
 			
 			jQuery('select[name="layer_target[]"] option:selected').each(function(){
 				if(jQuery(this).val() == do_sel){

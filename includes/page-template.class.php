@@ -68,7 +68,19 @@ class RevSliderPageTemplate {
 			'../public/views/revslider-page-template.php' => 'Slider Revolution Blank Template',
 		);
 		
+		// Fix for WP 4.7
+		add_filter( 'theme_page_templates', array($this, 'register_project_templates_new' ) );
+		
 	} 
+
+
+	// Adds our template to the new post templates setting (WP >= 4.7)
+	public function register_project_templates_new( $post_templates ) {
+	    
+	    $post_templates = array_merge( $post_templates, $this->templates );
+	 
+	    return $post_templates;
+	}
 
 
 	/**
@@ -85,6 +97,7 @@ class RevSliderPageTemplate {
 		// Retrieve the cache list. 
 		// If it doesn't exist, or it's empty prepare an array
 		$templates = wp_get_theme()->get_page_templates();
+
 		if ( empty( $templates ) ) {
 			$templates = array();
 		} 

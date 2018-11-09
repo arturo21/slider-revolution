@@ -1,6 +1,6 @@
 /************************************************
  * REVOLUTION 5.3 EXTENSION - LAYER ANIMATION
- * @version: 3.4.4 (30.11.2016)
+ * @version: 3.5.1 (09.12.2016)
  * @requires jquery.themepunch.revolution.js
  * @author ThemePunch
 ************************************************/
@@ -11,8 +11,8 @@ var _R = jQuery.fn.revolution,
 	_ISM = _R.is_mobile(),
 	extension = {	alias:"LayerAnimation Min JS",
 					name:"revolution.extensions.layeranimation.min.js",
-					min_core: "5.3.0",
-					version:"3.4.4"
+					min_core: "5.3.1",
+					version:"3.5.1"
 			  };
 	
 
@@ -172,13 +172,14 @@ jQuery.extend(true,_R, {
 		if (opt.layers["static"])
 			jQuery.each(opt.layers["static"], function(i,a) { 
 				var _t = jQuery(this),
-					_ = _t.data();
-				
+					_ = _t.data();				
 				if (_.hoveredstatus!==true && _.inhoveroutanimation!==true) {
 					_R.updateMarkup(this,opt);
 					_R.prepareSingleCaption({caption:_t, opt:opt, offsetx:base_offsetx, offsety:base_offsety, index:i, recall:recall,  preset:preset});
 					if (!preset || startSlideAnimAt===0)  _R.buildFullTimeLine({caption:_t, opt:opt, offsetx:base_offsetx, offsety:base_offsety, index:i, recall:recall,  preset:preset, regenerate: startSlideAnimAt===0});
 					if (recall && opt.sliderType==="carousel" && opt.carousel.showLayersAllTime==="on") _R.animcompleted(_t,opt);	    
+				} else {					
+					_R.prepareSingleCaption({caption:_t, opt:opt, offsetx:base_offsetx, offsety:base_offsety, index:i, recall:recall,  preset:preset});
 				}
 		});
 
@@ -478,7 +479,7 @@ jQuery.extend(true,_R, {
 			}
 
 			
-			if (_._ingroup) {				
+			if (_._ingroup && _._nctype!=="row") {				
 				if (ww!==undefined && !jQuery.isNumeric(ww) && ww.indexOf("%")>0)
 					punchgs.TweenLite.set([_._lw,_._pw,_._mw],{minWidth:ww});						
 				
@@ -494,22 +495,21 @@ jQuery.extend(true,_R, {
 		if (_._ba==="slide") {
 			obj.offsetx = 0;
 			obj.offsety=0;
-		} else 
-		if (_._isstatic && opt.carousel!==undefined && opt.carousel.horizontal_align!==undefined) {
+		} else {
+			if (_._isstatic && opt.carousel!==undefined && opt.carousel.horizontal_align!==undefined && opt.sliderType==="carousel") {			
+				switch (opt.carousel.horizontal_align) {
+					case "center":
+						obj.offsetx = 0 + (opt.ulw - (opt.gridwidth[opt.curWinRange]*opt.bw))/2;
 
-			switch (opt.carousel.horizontal_align) {
-				case "center":
-					obj.offsetx = 0 + (opt.ulw - opt.gridwidth[opt.curWinRange])/2;
-
-				break;
-				case "left":
-				break;
-				case "right":
-					obj.offsetx = (opt.ulw - opt.gridwidth[opt.curWinRange]);
-				break;
+					break;
+					case "left":
+					break;
+					case "right":
+						obj.offsetx = (opt.ulw - (opt.gridwidth[opt.curWinRange]*opt.bw));
+					break;
+				}
+				obj.offsetx = obj.offsetx<0 ? 0 : obj.offsetx;				
 			}
-			obj.offsetx = obj.offsetx<0 ? 0 : obj.offsetx;
-			
 		}
 
 
@@ -597,8 +597,8 @@ jQuery.extend(true,_R, {
 				im.height(hh);
 			}	
 
-			if (_._ingroup) {				
-			if (_.videowidth!==undefined && !jQuery.isNumeric(_.videowidth) && _.videowidth.indexOf("%")>0)
+			if (_._ingroup) {								
+				if (_.videowidth!==null && _.videowidth!==undefined && !jQuery.isNumeric(_.videowidth) && _.videowidth.indexOf("%")>0)
 					punchgs.TweenLite.set([_._lw,_._pw,_._mw],{minWidth:_.videowidth});						
 			}
 
@@ -677,8 +677,7 @@ jQuery.extend(true,_R, {
 			obj.offsetx =0;
 			obj.offsety = 0;				
 		}
-
-		
+	
 		
 		elx = elx==="center" || elx==="middle" ? (crw/2 - _.eow/2) +  hofs : elx==="left" ? hofs : elx==="right" ? (crw - _.eow) - hofs : _._respoffset !=="off"  ? elx * opt.bw : elx;
 		ely = ely=="center" || ely=="middle" ? 	(crh/2 - _.eoh/2) + vofs : ely =="top" ? vofs : ely=="bottom" ? (crh - _.eoh)-vofs : _._respoffset !=="off"  ? ely*opt.bw : ely;			
@@ -688,12 +687,12 @@ jQuery.extend(true,_R, {
 	
 		if (_._slidelink) elx=0;
 
+
 		
 		_.calcx = (parseInt(elx,0)+obj.offsetx);
 		_.calcy = (parseInt(ely,0)+obj.offsety);
 
-	
-		
+				
 		var tpcapindex = _nc.css("z-Index");
 		
 		
@@ -705,7 +704,7 @@ jQuery.extend(true,_R, {
 			punchgs.TweenLite.set(_._pw,{zIndex:tpcapindex, width:_.columnwidth, top:0,left:0,overwrite:"auto"});
 		else
 		if (_._nctype==="row") {
-			var _roww = _._ba==="grid" ? crw+"px" : "100%";
+			var _roww = _._ba==="grid" ? crw+"px" : "100%";			
 			punchgs.TweenLite.set(_._pw,{zIndex:tpcapindex, width:_roww, top:0,left:obj.offsetx,overwrite:"auto"});
 		}
 		if (_.blendmode!==undefined)
@@ -728,8 +727,8 @@ jQuery.extend(true,_R, {
 		// LOOP ANIMATION WIDTH/HEIGHT 
 		if (_.loopanimation=="on") punchgs.TweenLite.set(_._lw,{minWidth:_.eow,minHeight:_.eoh});
 
-		// ELEMENT IN GROUPS WITH % WIDTH AND HEIGHT SHOULD EXTEND PARRENT SIZES		
-		if (_._ingroup) {				
+		// ELEMENT IN GROUPS WITH % WIDTH AND HEIGHT SHOULD EXTEND PARRENT SIZES				
+		if (_._ingroup && _._nctype!=="row") {					
 			if (_._groupw!==undefined && !jQuery.isNumeric(_._groupw) && _._groupw.indexOf("%")>0)
 				punchgs.TweenLite.set([_._lw,_._pw,_._mw],{minWidth:_._groupw});						
 			
@@ -1703,16 +1702,19 @@ var getcssParams = function(nc,level) {
 	// CHECK IF CURRENT ELEMENT SHOULD RESPECT REKURSICVE RESIZES, AND SHOULD OWN THE SAME ATTRIBUTES FROM PARRENT ELEMENT
 	if (level=="rekursive") {
 		pc = nc.closest('.tp-caption');		
-		if (pc && nc.css("fontSize") === pc.css("fontSize")) 
+		if (pc && (
+				(nc.css("fontSize") === pc.css("fontSize")) && 
+				(nc.css("fontWeight") === pc.css("fontWeight")) && 
+				(nc.css("lineHeight") === pc.css("lineHeight"))
+				))
 			gp = true;
 	}
 
-	obj.basealign = nc.data('basealign') || "grid";
 	
-	
-	obj.fontSize = gp ? pc.data('fontsize')===undefined ?  parseInt(pc.css('fontSize'),0) || 0 : pc.data('fontsize')  :  nc.data('fontsize')===undefined ?  parseInt(nc.css('fontSize'),0) || 0 : nc.data('fontsize'); 
-	
-	obj.fontWeight = gp ? pc.data('fontweight')===undefined ?  parseInt(pc.css('fontWeight'),0) || 0 : pc.data('fontweight')  :  nc.data('fontweight')===undefined ?  parseInt(nc.css('fontWeight'),0) || 0 : nc.data('fontweight'); 
+	obj.basealign = nc.data('basealign') || "grid";	
+	obj.fontSize = gp ? pc.data('fontsize')===undefined ?  parseInt(pc.css('fontSize'),0) || 0 : pc.data('fontsize')  :  nc.data('fontsize')===undefined ?  parseInt(nc.css('fontSize'),0) || 0 : nc.data('fontsize'); 	
+	obj.fontWeight = gp ? pc.data('fontweight')===undefined ?  parseInt(pc.css('fontWeight'),0) || 0 : pc.data('fontweight')  :  nc.data('fontweight')===undefined ?  parseInt(nc.css('fontWeight'),0) || 0 : nc.data('fontweight'); 	
+		
 	obj.whiteSpace = gp ? pc.data('whitespace')===undefined ?  pc.css('whitespace') || "normal" : pc.data('whitespace')  :  nc.data('whitespace')===undefined ?  nc.css('whitespace') || "normal" : nc.data('whitespace'); 
 	obj.textAlign = gp ? pc.data('textalign')===undefined ?  pc.css('textalign') || "inherit" : pc.data('textalign')  :  nc.data('textalign')===undefined ?  nc.css('textalign') || "inherit" : nc.data('textalign'); 
 	obj.zIndex = gp ? pc.data('zIndex')===undefined ?  pc.css('zIndex') || "inherit" : pc.data('zIndex')  :  nc.data('zIndex')===undefined ?  nc.css('zIndex') || "inherit" : nc.data('zIndex'); 
@@ -1743,6 +1745,7 @@ var getcssParams = function(nc,level) {
 
 		obj.whiteSpace = gp ? pc.data('whitespace')===undefined ? pc.css('whiteSpace') || "nowrap" : pc.data('whitespace') : nc.data('whitespace')===undefined ? nc.css('whiteSpace') || "nowrap" : nc.data('whitespace');
 		obj.textAlign = gp ? pc.data('textalign')===undefined ? pc.css('textalign') || "inherit" : pc.data('textalign') : nc.data('textalign')===undefined ? nc.css('textalign') || "inherit" : nc.data('textalign');
+		obj.fontWeight = gp ? pc.data('fontweight')===undefined ?  parseInt(pc.css('fontWeight'),0) || 0 : pc.data('fontweight')  :  nc.data('fontweight')===undefined ?  parseInt(nc.css('fontWeight'),0) || 0 : nc.data('fontweight'); 
 
 		obj.minWidth = nc.data('width')===undefined ? parseInt(nc.css('minWidth'),0) || 0 : nc.data('width');
 		obj.minHeight = nc.data('height')===undefined ? parseInt(nc.css('minHeight'),0) || 0 : nc.data('height');

@@ -11,7 +11,7 @@ define("REVSLIDER_TEXTDOMAIN","revslider"); //just here for fallback reasons of 
 
 class RevSliderGlobals{
 
-	const SLIDER_REVISION = '5.3.1';
+	const SLIDER_REVISION = '5.3.1.5';
 	const TABLE_SLIDERS_NAME = "revslider_sliders";
 	const TABLE_SLIDES_NAME = "revslider_slides";
 	const TABLE_STATIC_SLIDES_NAME = "revslider_static_slides";
